@@ -93,3 +93,29 @@ describe ":renders" do
 
 end # === :renders
 
+describe ":renders_assets" do
+  
+  it "passes if relative links in pages all return a non-400, non-500 status" do
+    response 200, %(
+      <a href="/200/0.js">test</a>
+      <a href="/301/1.css">test</a>
+      <a href="/304/2.php">test</a>
+    )
+
+    renders_assets
+  end
+  
+  it "fails if any relative link is within 400-510" do
+    response 200, %(
+      <a href="/200/0.js">test</a>
+      <a href="/200/1.css">test</a>
+      <a href="/509/2.gif">test</a>
+    )
+
+    should.raise(Bacon::Error) {
+      renders_assets
+    }.message.should == "200..310.include?(509) failed"
+  end
+  
+end # === :renders_assets
+

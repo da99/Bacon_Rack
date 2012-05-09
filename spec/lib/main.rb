@@ -37,6 +37,12 @@ class Bacon::Context
     l['Content-Length'] = body.bytesize.to_s
   end
 
+  def get str
+    pieces = str.split('/').map(&:strip).reject(&:empty?)
+    stat, body = pieces
+    last_response.status = Integer(stat)
+  end
+
 end # === class
 
 class Fake_Rack < Hash
@@ -45,6 +51,10 @@ class Fake_Rack < Hash
   
   def last_response
     self
+  end
+
+  def ok?
+    status == 200
   end
 
 end # === Fake_Rack

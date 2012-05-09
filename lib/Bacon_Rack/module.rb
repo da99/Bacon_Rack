@@ -46,7 +46,7 @@ module Bacon_Rack
 
     files.each { |f|
       get f
-      last_response.should.be.ok
+      (200..310).should.include last_response.status
     }
   end
 
