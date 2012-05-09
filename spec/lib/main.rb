@@ -24,8 +24,30 @@ require 'pry'
 
 # ======== Custom code.
 
-# Nothing yet.
+class Bacon::Context
+  
+  def last_response
+    @fake_rack ||= Fake_Rack.new
+  end
 
+  def response stat, body
+    l = last_response
+    l.status = stat
+    l.body = body
+    l['Content-Length'] = body.bytesize.to_s
+  end
+
+end # === class
+
+class Fake_Rack < Hash
+  
+  attr_accessor :status, :body
+  
+  def last_response
+    self
+  end
+
+end # === Fake_Rack
 
 
 

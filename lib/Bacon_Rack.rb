@@ -1,7 +1,8 @@
 require 'Bacon_Rack/version'
+require 'Bacon_Rack/module'
 
-class Bacon_Rack
+class Bacon::Context
   
-  
-  
-end # === class Bacon_Rack
+  include Bacon_Rack
+
+end # === class Bacon::Context
