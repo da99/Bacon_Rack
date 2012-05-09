@@ -16,10 +16,10 @@ module Bacon_Rack
     .should == path
   end
   
-  def renders status, path = nil
+  def renders status, body = nil
     case status
     when Regexp, String
-      path, status = status, path
+      body, status = status, body
     else
       # do nothing
     end
@@ -28,6 +28,13 @@ module Bacon_Rack
     l = last_response
     l.status.should == status
     
+    case body
+    when Regexp
+      l.body.should.match body
+    else
+      l.body.should == body
+    end
+
     [ nil, l.body.bytesize.to_s ]
     .should.include l['Content-Length']
   end

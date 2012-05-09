@@ -41,6 +41,22 @@ end # === Bacon_Rack
 
 
 describe ":renders" do
+
+  it "passes if status is 200" do
+    response 200, "Body 2"
+
+    renders "Body 2"
+  end
+
+  it 'accepts a single string without a status' do
+    response 200, "Single"
+    renders "Single"
+  end
+
+  it 'accepts a regular expression in place of a String' do
+    response 200, "Regular"
+    renders %r!Regular!
+  end
   
   it "fails if status is not 200" do
     response 304, "Body 1"
@@ -48,12 +64,6 @@ describe ":renders" do
     should.raise(Bacon::Error) {
       renders "Body 1"
     }.message.should == '304.==(200) failed'
-  end
-
-  it "passes if status is 200" do
-    response 200, "Body 2"
-
-    renders "Body 2"
   end
 
   it "fails if Content-Length does not match bytesize of body" do
@@ -65,9 +75,20 @@ describe ":renders" do
     }.message.should == "[nil, \"6\"].include?(2) failed"
   end
 
-  it 'accepts a single string without a status' do
-    response 200, "Single"
-    renders "Single"
+  it 'fails if regular expression does not match body' do
+    response 200, "No match."
+    should.raise( Bacon::Error ) {
+      renders %r!No single.!
+    }.message
+    .should == "\"No match.\".=~(/No single./) failed"
+  end
+
+  it 'fails if String is not a full match with the body.' do
+    response 200, "Partial string"
+    should.raise( Bacon::Error ){
+      renders 200, "string"
+    }.message
+    .should == "\"Partial string\".==(\"string\") failed"
   end
 
 end # === :renders
