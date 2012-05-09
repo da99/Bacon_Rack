@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
   s.authors     = ["da99"]
   s.email       = ["i-hate-spam-45671204@mailinator.com"]
   s.homepage    = "https://github.com/da99/Bacon_Rack"
-  s.summary     = %q{Helper methods for Bacon specs.}
+  s.summary     = %q{Helper methods for Bacon specs that use rack-test.}
   s.description = %q{
 
-    Provides helpers for your Bacon specs:
+    Provides helpers for your Bacon specs using rack-test:
     :renders, :redirects_to, :renders_assets.
 
     Read more at the homepage.

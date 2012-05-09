@@ -2,7 +2,8 @@
 Bacon\_Rack
 ================
 
-A Ruby gem providing helper methods for your Bacon specs.
+A Ruby gem providing helper methods for your Bacon and rack/test 
+specs.
 
 Installation
 ------------
