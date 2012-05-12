@@ -1,3 +1,10 @@
+describe ":it_redirects_to" do
+  
+  it_redirects 301, "/301/body", "/body"
+  it_redirects "/302/perma", "/perma" 
+  
+end # === :it_redirects_to
+
 
 describe ":redirects_to" do
   

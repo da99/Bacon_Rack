@@ -1,5 +1,22 @@
 module Bacon_Rack
 
+  def it_redirects *args
+    case args.size
+    when 2
+      req, resp, stat = args
+    when 3
+      stat, req, resp = args
+    else
+      raise ArgumentError, "Incorrect number of arguments: #{args.inspect}"
+    end
+    suffix = stat ? "using #{stat}" : ''
+    it "redirects #{req} to #{resp} #{suffix}" do
+      get req
+      redirects_to( *([stat, resp].compact))
+      yield(stat, req, resp) if block_given?
+    end
+  end
+
   def redirects_to status, path = nil
     if status.is_a?(Integer)
       # do nothing

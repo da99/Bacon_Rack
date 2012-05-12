@@ -40,6 +40,11 @@ class Bacon::Context
   def get str
     pieces = str.split('/').map(&:strip).reject(&:empty?)
     stat, body = pieces
+    case stat.to_i
+    when 300..310
+      last_response['Location'] = File.join('/', *body)
+    end
+
     last_response.status = Integer(stat)
   end
 
