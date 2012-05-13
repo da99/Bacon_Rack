@@ -28,14 +28,13 @@ describe ":redirects_to" do
     }
   end
 
-  %w{ example.com www.example.com }.each { |str|
-    it "ignores http://#{str} host in location header" do
-      last_response.status = 301
-      last_response['Location'] = "http://#{str}/new"
-      
-      redirects_to '/new'
-    end
-  }
+  it "ignores SERVER_NAME in location header" do
+    last_request.env['SERVER_NAME'] = "http://random.org/"
+    last_response.status = 301
+    last_response['Location'] = "http://random.org/new"
+
+    redirects_to '/new'
+  end
 
   it "accepts both a status and path" do
     last_response.status = 303

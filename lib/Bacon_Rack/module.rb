@@ -29,7 +29,7 @@ module Bacon_Rack
 
     status.should.include last_response.status
 
-    last_response['Location'].sub(%r!http://(www.)?example\.com!, '')
+    last_response['Location'].sub(File.join(last_request.env['SERVER_NAME'],'/'), '/')
     .should == path
   end
   

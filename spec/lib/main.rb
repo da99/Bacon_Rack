@@ -26,6 +26,17 @@ require 'pry'
 
 class Bacon::Context
   
+  def last_request
+    @o ||= begin
+            new_o = Object.new
+            def new_o.env
+              @h ||= Hash['SERVER_NAME'=>'http://www.example.org']
+            end
+            new_o
+          end
+    @o
+  end
+
   def last_response
     @fake_rack ||= Fake_Rack.new
   end
