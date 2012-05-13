@@ -29,7 +29,7 @@ describe ":redirects_to" do
   end
 
   it "ignores SERVER_NAME in location header" do
-    last_request.env['SERVER_NAME'] = "http://random.org/"
+    last_request.env['SERVER_NAME'] = "random.org/"
     last_response.status = 301
     last_response['Location'] = "http://random.org/new"
 
