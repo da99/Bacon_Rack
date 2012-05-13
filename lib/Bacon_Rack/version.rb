@@ -1,1 +1,1 @@
-Bacon_Rack_Version = "0.2.1"
+Bacon_Rack_Version = "0.2.2"
